@@ -12,8 +12,8 @@
   DTS:LocaleID="1033"
   DTS:ObjectName="Package"
   DTS:PackageType="5"
-  DTS:VersionBuild="28"
-  DTS:VersionGUID="{8E0422A0-BB56-4F62-B12F-FFEF8C502355}">
+  DTS:VersionBuild="29"
+  DTS:VersionGUID="{9E8875F1-D042-43D5-AD7D-364972F4B30B}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:ConnectionManagers>
@@ -39,7 +39,7 @@
         DTS:Name="ExcelFilePath">@[User::vFullExcelFilePath]</DTS:PropertyExpression>
       <DTS:ObjectData>
         <DTS:ConnectionManager
-          DTS:ConnectionString="Provider=Microsoft.ACE.OLEDB.12.0;Data Source=C:\SSIS Files\Copy of EI_Monthly_Submittal (003) - TriVersity.xlsx;Extended Properties=&quot;EXCEL 12.0 XML;HDR=YES&quot;;" />
+          DTS:ConnectionString="Provider=Microsoft.ACE.OLEDB.12.0;Data Source=C:\New folder\Copy of EI_Monthly_Submittal (003) - TriVersity.xlsx;Extended Properties=&quot;EXCEL 12.0 XML;HDR=YES&quot;;" />
       </DTS:ObjectData>
     </DTS:ConnectionManager>
   </DTS:ConnectionManagers>
@@ -89,7 +89,7 @@
       DTS:Namespace="User"
       DTS:ObjectName="vFullExcelFilePath">
       <DTS:VariableValue
-        DTS:DataType="8">C:\SSIS Files\Copy of EI_Monthly_Submittal (003) - TriVersity.xlsx</DTS:VariableValue>
+        DTS:DataType="8">C:\New folder\Copy of EI_Monthly_Submittal (003) - TriVersity.xlsx</DTS:VariableValue>
     </DTS:Variable>
   </DTS:Variables>
   <DTS:Executables>
@@ -110,7 +110,7 @@
         <DTS:ObjectData>
           <ForEachFileEnumeratorProperties>
             <FEFEProperty
-              Folder="C:\SSIS Files\" />
+              Folder="C:\New folder\" />
             <FEFEProperty
               FileSpec="*.xlsx" />
             <FEFEProperty
@@ -792,7 +792,7 @@
     design-time-name="Package">
     <LayoutInfo>
       <GraphLayout
-        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
         <NodeLayout
           Size="225,42"
           Id="Package\Loop Through each file in the source location\DFT-Load Data to TempTable"
@@ -882,6 +882,13 @@
           Size="287,359"
           Id="Package\Loop Through each file in the source location"
           TopLeft="212.888888888889,130.555555555556" />
+        <AnnotationLayout
+          Text="Adding Annotation: This package is used to load data from Excel to SQL table"
+          ParentId="Package"
+          FontInfo="{assembly:Null}"
+          Size="438,60"
+          Id="b4d51c43-c31b-4869-915e-246c24d4514e"
+          TopLeft="572,216" />
       </GraphLayout>
     </LayoutInfo>
   </Package>
