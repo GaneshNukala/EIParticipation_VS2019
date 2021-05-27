@@ -1,0 +1,983 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="5/26/2021 3:20:49 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="DEVOPS-01"
+  DTS:CreatorName="MESSER\gnukal"
+  DTS:DelayValidation="True"
+  DTS:DTSID="{5755C8F3-839F-4A8E-A75B-C0ED35836B96}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="15.0.2000.152"
+  DTS:LocaleID="1033"
+  DTS:ObjectName="Package"
+  DTS:PackageType="5"
+  DTS:VersionBuild="28"
+  DTS:VersionGUID="{8E0422A0-BB56-4F62-B12F-FFEF8C502355}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[CIN-VPS-DEV\VPTEST.Viewpoint]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{6292EA2F-1640-4DDA-BEFF-468FED72DFEB}"
+      DTS:ObjectName="CIN-VPS-DEV\VPTEST.Viewpoint">
+      <DTS:PropertyExpression
+        DTS:Name="ConnectionString">@[$Project::conViewPoint]</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Server=CIN-VPS-DEV\VPTEST;Provider=SQLNCLI11;Database=Viewpoint;Trusted_Connection=yes;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[Excel Connection Manager]"
+      DTS:CreationName="EXCEL"
+      DTS:DelayValidation="True"
+      DTS:DTSID="{D33F10BB-418D-4B7C-A808-367A4E59F7D3}"
+      DTS:ObjectName="Excel Connection Manager">
+      <DTS:PropertyExpression
+        DTS:Name="ExcelFilePath">@[User::vFullExcelFilePath]</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Provider=Microsoft.ACE.OLEDB.12.0;Data Source=C:\SSIS Files\Copy of EI_Monthly_Submittal (003) - TriVersity.xlsx;Extended Properties=&quot;EXCEL 12.0 XML;HDR=YES&quot;;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{FE816D58-AEBA-484A-B4DB-76CDDCE8C731}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="vDestPath">
+      <DTS:VariableValue
+        DTS:DataType="8">C:\SSIS_destination</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{788D1494-D190-4AAA-97CD-C33540753BF3}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="vExcelFilePath">
+      <DTS:VariableValue
+        DTS:DataType="8">C:\SSIS Files\</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{708CDF83-58F1-47D9-8C9E-8AE40ED17FF3}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="vExcelSheetName">
+      <DTS:VariableValue
+        DTS:DataType="8">EI_Monthly_Submittal</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{E3879EC7-9CAD-4515-B2D8-219606CA0F4E}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="vFileName">
+      <DTS:VariableValue
+        DTS:DataType="8">Copy of EI_Monthly_Submittal (003) - TriVersity.xlsx</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{9C8DE634-0DEC-43D8-BD04-C9F343CC564A}"
+      DTS:EvaluateAsExpression="True"
+      DTS:Expression="@[$Project::conExcelSource]+ @[User::vFileName]"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="vFullExcelFilePath">
+      <DTS:VariableValue
+        DTS:DataType="8">C:\SSIS Files\Copy of EI_Monthly_Submittal (003) - TriVersity.xlsx</DTS:VariableValue>
+    </DTS:Variable>
+  </DTS:Variables>
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Loop Through each file in the source location"
+      DTS:CreationName="STOCK:FOREACHLOOP"
+      DTS:Description="Foreach Loop Container"
+      DTS:DTSID="{93DF1B1E-6453-4212-8FD8-7035293F9FDE}"
+      DTS:ExecutableType="STOCK:FOREACHLOOP"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Loop Through each file in the source location">
+      <DTS:ForEachEnumerator
+        DTS:CreationName="Microsoft.ForEachFileEnumerator"
+        DTS:DTSID="{AC3B356D-85FD-448E-BF5B-81BD0CE840D1}"
+        DTS:ObjectName="{AC3B356D-85FD-448E-BF5B-81BD0CE840D1}">
+        <DTS:PropertyExpression
+          DTS:Name="Directory">@[$Project::conExcelSource]</DTS:PropertyExpression>
+        <DTS:ObjectData>
+          <ForEachFileEnumeratorProperties>
+            <FEFEProperty
+              Folder="C:\SSIS Files\" />
+            <FEFEProperty
+              FileSpec="*.xlsx" />
+            <FEFEProperty
+              FileNameRetrievalType="1" />
+            <FEFEProperty
+              Recurse="0" />
+          </ForEachFileEnumeratorProperties>
+        </DTS:ObjectData>
+      </DTS:ForEachEnumerator>
+      <DTS:Variables />
+      <DTS:Executables>
+        <DTS:Executable
+          DTS:refId="Package\Loop Through each file in the source location\DFT-Load Data to TempTable"
+          DTS:CreationName="Microsoft.Pipeline"
+          DTS:Description="Data Flow Task"
+          DTS:DTSID="{5D7D5985-A4DE-4E9A-B259-82D1878D669E}"
+          DTS:ExecutableType="Microsoft.Pipeline"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="DFT-Load Data to TempTable"
+          DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <pipeline
+              version="1">
+              <components>
+                <component
+                  refId="Package\Loop Through each file in the source location\DFT-Load Data to TempTable\Convert DaysOnProject to 0 if data not available"
+                  componentClassID="Microsoft.DerivedColumn"
+                  contactInfo="Derived Column;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+                  description="Creates new column values by applying expressions to transformation input columns. Create new columns or overwrite existing ones. For example, concatenate the values from the 'first name' and 'last name' column to make a 'full name' column."
+                  name="Convert DaysOnProject to 0 if data not available"
+                  usesDispositions="true">
+                  <inputs>
+                    <input
+                      refId="Package\Loop Through each file in the source location\DFT-Load Data to TempTable\Convert DaysOnProject to 0 if data not available.Inputs[Derived Column Input]"
+                      description="Input to the Derived Column Transformation"
+                      name="Derived Column Input">
+                      <inputColumns>
+                        <inputColumn
+                          refId="Package\Loop Through each file in the source location\DFT-Load Data to TempTable\Convert DaysOnProject to 0 if data not available.Inputs[Derived Column Input].Columns[Days On Project]"
+                          cachedDataType="wstr"
+                          cachedLength="255"
+                          cachedName="Days On Project"
+                          lineageId="Package\Loop Through each file in the source location\DFT-Load Data to TempTable\Excel Source.Outputs[Excel Source Output].Columns[Days On Project]" />
+                      </inputColumns>
+                      <externalMetadataColumns />
+                    </input>
+                  </inputs>
+                  <outputs>
+                    <output
+                      refId="Package\Loop Through each file in the source location\DFT-Load Data to TempTable\Convert DaysOnProject to 0 if data not available.Outputs[Derived Column Output]"
+                      description="Default Output of the Derived Column Transformation"
+                      exclusionGroup="1"
+                      name="Derived Column Output"
+                      synchronousInputId="Package\Loop Through each file in the source location\DFT-Load Data to TempTable\Convert DaysOnProject to 0 if data not available.Inputs[Derived Column Input]">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\Loop Through each file in the source location\DFT-Load Data to TempTable\Convert DaysOnProject to 0 if data not available.Outputs[Derived Column Output].Columns[DER_DaysOnProject]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Computation"
+                          errorRowDisposition="FailComponent"
+                          length="255"
+                          lineageId="Package\Loop Through each file in the source location\DFT-Load Data to TempTable\Convert DaysOnProject to 0 if data not available.Outputs[Derived Column Output].Columns[DER_DaysOnProject]"
+                          name="DER_DaysOnProject"
+                          truncationRowDisposition="FailComponent">
+                          <properties>
+                            <property
+                              containsID="true"
+                              dataType="System.String"
+                              description="Derived Column Expression"
+                              name="Expression">[LTRIM]([RTRIM](#{Package\Loop Through each file in the source location\DFT-Load Data to TempTable\Excel Source.Outputs[Excel Source Output].Columns[Days On Project]})) == "" ? "0" : #{Package\Loop Through each file in the source location\DFT-Load Data to TempTable\Excel Source.Outputs[Excel Source Output].Columns[Days On Project]}</property>
+                            <property
+                              containsID="true"
+                              dataType="System.String"
+                              description="Derived Column Friendly Expression"
+                              expressionType="Notify"
+                              name="FriendlyExpression">LTRIM(RTRIM([Days On Project])) == "" ? "0" : [Days On Project]</property>
+                          </properties>
+                        </outputColumn>
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                    <output
+                      refId="Package\Loop Through each file in the source location\DFT-Load Data to TempTable\Convert DaysOnProject to 0 if data not available.Outputs[Derived Column Error Output]"
+                      description="Error Output of the Derived Column Transformation"
+                      exclusionGroup="1"
+                      isErrorOut="true"
+                      name="Derived Column Error Output"
+                      synchronousInputId="Package\Loop Through each file in the source location\DFT-Load Data to TempTable\Convert DaysOnProject to 0 if data not available.Inputs[Derived Column Input]">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\Loop Through each file in the source location\DFT-Load Data to TempTable\Convert DaysOnProject to 0 if data not available.Outputs[Derived Column Error Output].Columns[ErrorCode]"
+                          dataType="i4"
+                          lineageId="Package\Loop Through each file in the source location\DFT-Load Data to TempTable\Convert DaysOnProject to 0 if data not available.Outputs[Derived Column Error Output].Columns[ErrorCode]"
+                          name="ErrorCode"
+                          specialFlags="1" />
+                        <outputColumn
+                          refId="Package\Loop Through each file in the source location\DFT-Load Data to TempTable\Convert DaysOnProject to 0 if data not available.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
+                          dataType="i4"
+                          lineageId="Package\Loop Through each file in the source location\DFT-Load Data to TempTable\Convert DaysOnProject to 0 if data not available.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
+                          name="ErrorColumn"
+                          specialFlags="2" />
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                  </outputs>
+                </component>
+                <component
+                  refId="Package\Loop Through each file in the source location\DFT-Load Data to TempTable\Dst-budEconData_TempLoad"
+                  componentClassID="Microsoft.OLEDBDestination"
+                  contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+                  description="OLE DB Destination"
+                  name="Dst-budEconData_TempLoad"
+                  usesDispositions="true"
+                  version="4">
+                  <properties>
+                    <property
+                      dataType="System.Int32"
+                      description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                      name="CommandTimeout">0</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the name of the database object used to open a rowset."
+                      name="OpenRowset">[dbo].[budEconData_TempLoad]</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the variable that contains the name of the database object used to open a rowset."
+                      name="OpenRowsetVariable"></property>
+                    <property
+                      dataType="System.String"
+                      description="The SQL command to be executed."
+                      name="SqlCommand"
+                      UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"></property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the column code page to use when code page information is unavailable from the data source."
+                      name="DefaultCodePage">1252</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Forces the use of the DefaultCodePage property value when describing character data."
+                      name="AlwaysUseDefaultCodePage">false</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the mode used to access the database."
+                      name="AccessMode"
+                      typeConverter="AccessMode">3</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                      name="FastLoadKeepIdentity">false</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                      name="FastLoadKeepNulls">false</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                      name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                      name="FastLoadMaxInsertCommitSize">2147483647</property>
+                  </properties>
+                  <connections>
+                    <connection
+                      refId="Package\Loop Through each file in the source location\DFT-Load Data to TempTable\Dst-budEconData_TempLoad.Connections[OleDbConnection]"
+                      connectionManagerID="Package.ConnectionManagers[CIN-VPS-DEV\VPTEST.Viewpoint]"
+                      connectionManagerRefId="Package.ConnectionManagers[CIN-VPS-DEV\VPTEST.Viewpoint]"
+                      description="The OLE DB runtime connection used to access the database."
+                      name="OleDbConnection" />
+                  </connections>
+                  <inputs>
+                    <input
+                      refId="Package\Loop Through each file in the source location\DFT-Load Data to TempTable\Dst-budEconData_TempLoad.Inputs[OLE DB Destination Input]"
+                      errorOrTruncationOperation="Insert"
+                      errorRowDisposition="FailComponent"
+                      hasSideEffects="true"
+                      name="OLE DB Destination Input">
+                      <inputColumns>
+                        <inputColumn
+                          refId="Package\Loop Through each file in the source location\DFT-Load Data to TempTable\Dst-budEconData_TempLoad.Inputs[OLE DB Destination Input].Columns[JCCo]"
+                          cachedDataType="wstr"
+                          cachedLength="255"
+                          cachedName="JCCo"
+                          externalMetadataColumnId="Package\Loop Through each file in the source location\DFT-Load Data to TempTable\Dst-budEconData_TempLoad.Inputs[OLE DB Destination Input].ExternalColumns[JCCo]"
+                          lineageId="Package\Loop Through each file in the source location\DFT-Load Data to TempTable\Excel Source.Outputs[Excel Source Output].Columns[JCCo]" />
+                        <inputColumn
+                          refId="Package\Loop Through each file in the source location\DFT-Load Data to TempTable\Dst-budEconData_TempLoad.Inputs[OLE DB Destination Input].Columns[Project]"
+                          cachedDataType="wstr"
+                          cachedLength="255"
+                          cachedName="Project"
+                          externalMetadataColumnId="Package\Loop Through each file in the source location\DFT-Load Data to TempTable\Dst-budEconData_TempLoad.Inputs[OLE DB Destination Input].ExternalColumns[Project]"
+                          lineageId="Package\Loop Through each file in the source location\DFT-Load Data to TempTable\Excel Source.Outputs[Excel Source Output].Columns[Project]" />
+                        <inputColumn
+                          refId="Package\Loop Through each file in the source location\DFT-Load Data to TempTable\Dst-budEconData_TempLoad.Inputs[OLE DB Destination Input].Columns[Vendor]"
+                          cachedDataType="wstr"
+                          cachedLength="255"
+                          cachedName="Vendor"
+                          externalMetadataColumnId="Package\Loop Through each file in the source location\DFT-Load Data to TempTable\Dst-budEconData_TempLoad.Inputs[OLE DB Destination Input].ExternalColumns[Vendor]"
+                          lineageId="Package\Loop Through each file in the source location\DFT-Load Data to TempTable\Excel Source.Outputs[Excel Source Output].Columns[Vendor]" />
+                        <inputColumn
+                          refId="Package\Loop Through each file in the source location\DFT-Load Data to TempTable\Dst-budEconData_TempLoad.Inputs[OLE DB Destination Input].Columns[Last Name]"
+                          cachedDataType="wstr"
+                          cachedLength="255"
+                          cachedName="Last Name"
+                          externalMetadataColumnId="Package\Loop Through each file in the source location\DFT-Load Data to TempTable\Dst-budEconData_TempLoad.Inputs[OLE DB Destination Input].ExternalColumns[Last Name]"
+                          lineageId="Package\Loop Through each file in the source location\DFT-Load Data to TempTable\Excel Source.Outputs[Excel Source Output].Columns[Last Name]" />
+                        <inputColumn
+                          refId="Package\Loop Through each file in the source location\DFT-Load Data to TempTable\Dst-budEconData_TempLoad.Inputs[OLE DB Destination Input].Columns[First Name]"
+                          cachedDataType="wstr"
+                          cachedLength="255"
+                          cachedName="First Name"
+                          externalMetadataColumnId="Package\Loop Through each file in the source location\DFT-Load Data to TempTable\Dst-budEconData_TempLoad.Inputs[OLE DB Destination Input].ExternalColumns[First Name]"
+                          lineageId="Package\Loop Through each file in the source location\DFT-Load Data to TempTable\Excel Source.Outputs[Excel Source Output].Columns[First Name]" />
+                        <inputColumn
+                          refId="Package\Loop Through each file in the source location\DFT-Load Data to TempTable\Dst-budEconData_TempLoad.Inputs[OLE DB Destination Input].Columns[Mth]"
+                          cachedDataType="wstr"
+                          cachedLength="255"
+                          cachedName="Mth"
+                          externalMetadataColumnId="Package\Loop Through each file in the source location\DFT-Load Data to TempTable\Dst-budEconData_TempLoad.Inputs[OLE DB Destination Input].ExternalColumns[Mth]"
+                          lineageId="Package\Loop Through each file in the source location\DFT-Load Data to TempTable\Excel Source.Outputs[Excel Source Output].Columns[Mth]" />
+                        <inputColumn
+                          refId="Package\Loop Through each file in the source location\DFT-Load Data to TempTable\Dst-budEconData_TempLoad.Inputs[OLE DB Destination Input].Columns[Safety ID]"
+                          cachedDataType="wstr"
+                          cachedLength="255"
+                          cachedName="Safety ID"
+                          externalMetadataColumnId="Package\Loop Through each file in the source location\DFT-Load Data to TempTable\Dst-budEconData_TempLoad.Inputs[OLE DB Destination Input].ExternalColumns[Safety ID]"
+                          lineageId="Package\Loop Through each file in the source location\DFT-Load Data to TempTable\Excel Source.Outputs[Excel Source Output].Columns[Safety ID]" />
+                        <inputColumn
+                          refId="Package\Loop Through each file in the source location\DFT-Load Data to TempTable\Dst-budEconData_TempLoad.Inputs[OLE DB Destination Input].Columns[DER_DaysOnProject]"
+                          cachedDataType="wstr"
+                          cachedLength="255"
+                          cachedName="DER_DaysOnProject"
+                          externalMetadataColumnId="Package\Loop Through each file in the source location\DFT-Load Data to TempTable\Dst-budEconData_TempLoad.Inputs[OLE DB Destination Input].ExternalColumns[Days On Project]"
+                          lineageId="Package\Loop Through each file in the source location\DFT-Load Data to TempTable\Convert DaysOnProject to 0 if data not available.Outputs[Derived Column Output].Columns[DER_DaysOnProject]" />
+                      </inputColumns>
+                      <externalMetadataColumns
+                        isUsed="True">
+                        <externalMetadataColumn
+                          refId="Package\Loop Through each file in the source location\DFT-Load Data to TempTable\Dst-budEconData_TempLoad.Inputs[OLE DB Destination Input].ExternalColumns[JCCo]"
+                          dataType="r8"
+                          name="JCCo" />
+                        <externalMetadataColumn
+                          refId="Package\Loop Through each file in the source location\DFT-Load Data to TempTable\Dst-budEconData_TempLoad.Inputs[OLE DB Destination Input].ExternalColumns[Project]"
+                          dataType="wstr"
+                          length="255"
+                          name="Project" />
+                        <externalMetadataColumn
+                          refId="Package\Loop Through each file in the source location\DFT-Load Data to TempTable\Dst-budEconData_TempLoad.Inputs[OLE DB Destination Input].ExternalColumns[Vendor]"
+                          dataType="r8"
+                          name="Vendor" />
+                        <externalMetadataColumn
+                          refId="Package\Loop Through each file in the source location\DFT-Load Data to TempTable\Dst-budEconData_TempLoad.Inputs[OLE DB Destination Input].ExternalColumns[Last Name]"
+                          dataType="wstr"
+                          length="255"
+                          name="Last Name" />
+                        <externalMetadataColumn
+                          refId="Package\Loop Through each file in the source location\DFT-Load Data to TempTable\Dst-budEconData_TempLoad.Inputs[OLE DB Destination Input].ExternalColumns[First Name]"
+                          dataType="wstr"
+                          length="255"
+                          name="First Name" />
+                        <externalMetadataColumn
+                          refId="Package\Loop Through each file in the source location\DFT-Load Data to TempTable\Dst-budEconData_TempLoad.Inputs[OLE DB Destination Input].ExternalColumns[Safety ID]"
+                          dataType="wstr"
+                          length="255"
+                          name="Safety ID" />
+                        <externalMetadataColumn
+                          refId="Package\Loop Through each file in the source location\DFT-Load Data to TempTable\Dst-budEconData_TempLoad.Inputs[OLE DB Destination Input].ExternalColumns[Days On Project]"
+                          dataType="r8"
+                          name="Days On Project" />
+                        <externalMetadataColumn
+                          refId="Package\Loop Through each file in the source location\DFT-Load Data to TempTable\Dst-budEconData_TempLoad.Inputs[OLE DB Destination Input].ExternalColumns[Mth]"
+                          dataType="dbTimeStamp"
+                          name="Mth" />
+                      </externalMetadataColumns>
+                    </input>
+                  </inputs>
+                  <outputs>
+                    <output
+                      refId="Package\Loop Through each file in the source location\DFT-Load Data to TempTable\Dst-budEconData_TempLoad.Outputs[OLE DB Destination Error Output]"
+                      exclusionGroup="1"
+                      isErrorOut="true"
+                      name="OLE DB Destination Error Output"
+                      synchronousInputId="Package\Loop Through each file in the source location\DFT-Load Data to TempTable\Dst-budEconData_TempLoad.Inputs[OLE DB Destination Input]">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\Loop Through each file in the source location\DFT-Load Data to TempTable\Dst-budEconData_TempLoad.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                          dataType="i4"
+                          lineageId="Package\Loop Through each file in the source location\DFT-Load Data to TempTable\Dst-budEconData_TempLoad.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                          name="ErrorCode"
+                          specialFlags="1" />
+                        <outputColumn
+                          refId="Package\Loop Through each file in the source location\DFT-Load Data to TempTable\Dst-budEconData_TempLoad.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                          dataType="i4"
+                          lineageId="Package\Loop Through each file in the source location\DFT-Load Data to TempTable\Dst-budEconData_TempLoad.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                          name="ErrorColumn"
+                          specialFlags="2" />
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                  </outputs>
+                </component>
+                <component
+                  refId="Package\Loop Through each file in the source location\DFT-Load Data to TempTable\Excel Source"
+                  componentClassID="Microsoft.ExcelSource"
+                  contactInfo="Excel Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;1"
+                  description="Excel Source"
+                  name="Excel Source"
+                  usesDispositions="true"
+                  version="1">
+                  <properties>
+                    <property
+                      dataType="System.Int32"
+                      description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                      name="CommandTimeout">0</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the name of the database object used to open a rowset."
+                      name="OpenRowset">EI_Monthly_Submittal$</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the variable that contains the name of the database object used to open a rowset."
+                      name="OpenRowsetVariable"></property>
+                    <property
+                      dataType="System.String"
+                      description="The SQL command to be executed."
+                      name="SqlCommand"
+                      UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"></property>
+                    <property
+                      dataType="System.String"
+                      description="The variable that contains the SQL command to be executed."
+                      name="SqlCommandVariable"></property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the mode used to access the database."
+                      name="AccessMode"
+                      typeConverter="AccessMode">0</property>
+                    <property
+                      dataType="System.String"
+                      description="The mapping from parameters in the SQL command to variables."
+                      name="ParameterMapping"></property>
+                  </properties>
+                  <connections>
+                    <connection
+                      refId="Package\Loop Through each file in the source location\DFT-Load Data to TempTable\Excel Source.Connections[OleDbConnection]"
+                      connectionManagerID="Package.ConnectionManagers[Excel Connection Manager]"
+                      connectionManagerRefId="Package.ConnectionManagers[Excel Connection Manager]"
+                      description="The OLE DB runtime connection used to access the database."
+                      name="OleDbConnection" />
+                  </connections>
+                  <outputs>
+                    <output
+                      refId="Package\Loop Through each file in the source location\DFT-Load Data to TempTable\Excel Source.Outputs[Excel Source Output]"
+                      name="Excel Source Output">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\Loop Through each file in the source location\DFT-Load Data to TempTable\Excel Source.Outputs[Excel Source Output].Columns[JCCo]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Loop Through each file in the source location\DFT-Load Data to TempTable\Excel Source.Outputs[Excel Source Output].ExternalColumns[JCCo]"
+                          length="255"
+                          lineageId="Package\Loop Through each file in the source location\DFT-Load Data to TempTable\Excel Source.Outputs[Excel Source Output].Columns[JCCo]"
+                          name="JCCo"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\Loop Through each file in the source location\DFT-Load Data to TempTable\Excel Source.Outputs[Excel Source Output].Columns[Project]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Loop Through each file in the source location\DFT-Load Data to TempTable\Excel Source.Outputs[Excel Source Output].ExternalColumns[Project]"
+                          length="255"
+                          lineageId="Package\Loop Through each file in the source location\DFT-Load Data to TempTable\Excel Source.Outputs[Excel Source Output].Columns[Project]"
+                          name="Project"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\Loop Through each file in the source location\DFT-Load Data to TempTable\Excel Source.Outputs[Excel Source Output].Columns[Vendor]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Loop Through each file in the source location\DFT-Load Data to TempTable\Excel Source.Outputs[Excel Source Output].ExternalColumns[Vendor]"
+                          length="255"
+                          lineageId="Package\Loop Through each file in the source location\DFT-Load Data to TempTable\Excel Source.Outputs[Excel Source Output].Columns[Vendor]"
+                          name="Vendor"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\Loop Through each file in the source location\DFT-Load Data to TempTable\Excel Source.Outputs[Excel Source Output].Columns[SecondTierFirm]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Loop Through each file in the source location\DFT-Load Data to TempTable\Excel Source.Outputs[Excel Source Output].ExternalColumns[SecondTierFirm]"
+                          length="255"
+                          lineageId="Package\Loop Through each file in the source location\DFT-Load Data to TempTable\Excel Source.Outputs[Excel Source Output].Columns[SecondTierFirm]"
+                          name="SecondTierFirm"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\Loop Through each file in the source location\DFT-Load Data to TempTable\Excel Source.Outputs[Excel Source Output].Columns[Last Name]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Loop Through each file in the source location\DFT-Load Data to TempTable\Excel Source.Outputs[Excel Source Output].ExternalColumns[Last Name]"
+                          length="255"
+                          lineageId="Package\Loop Through each file in the source location\DFT-Load Data to TempTable\Excel Source.Outputs[Excel Source Output].Columns[Last Name]"
+                          name="Last Name"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\Loop Through each file in the source location\DFT-Load Data to TempTable\Excel Source.Outputs[Excel Source Output].Columns[First Name]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Loop Through each file in the source location\DFT-Load Data to TempTable\Excel Source.Outputs[Excel Source Output].ExternalColumns[First Name]"
+                          length="255"
+                          lineageId="Package\Loop Through each file in the source location\DFT-Load Data to TempTable\Excel Source.Outputs[Excel Source Output].Columns[First Name]"
+                          name="First Name"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\Loop Through each file in the source location\DFT-Load Data to TempTable\Excel Source.Outputs[Excel Source Output].Columns[Mth]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Loop Through each file in the source location\DFT-Load Data to TempTable\Excel Source.Outputs[Excel Source Output].ExternalColumns[Mth]"
+                          length="255"
+                          lineageId="Package\Loop Through each file in the source location\DFT-Load Data to TempTable\Excel Source.Outputs[Excel Source Output].Columns[Mth]"
+                          name="Mth"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\Loop Through each file in the source location\DFT-Load Data to TempTable\Excel Source.Outputs[Excel Source Output].Columns[Safety ID]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Loop Through each file in the source location\DFT-Load Data to TempTable\Excel Source.Outputs[Excel Source Output].ExternalColumns[Safety ID]"
+                          length="255"
+                          lineageId="Package\Loop Through each file in the source location\DFT-Load Data to TempTable\Excel Source.Outputs[Excel Source Output].Columns[Safety ID]"
+                          name="Safety ID"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\Loop Through each file in the source location\DFT-Load Data to TempTable\Excel Source.Outputs[Excel Source Output].Columns[Days On Project]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Loop Through each file in the source location\DFT-Load Data to TempTable\Excel Source.Outputs[Excel Source Output].ExternalColumns[Days On Project]"
+                          length="255"
+                          lineageId="Package\Loop Through each file in the source location\DFT-Load Data to TempTable\Excel Source.Outputs[Excel Source Output].Columns[Days On Project]"
+                          name="Days On Project"
+                          truncationRowDisposition="FailComponent" />
+                      </outputColumns>
+                      <externalMetadataColumns
+                        isUsed="True">
+                        <externalMetadataColumn
+                          refId="Package\Loop Through each file in the source location\DFT-Load Data to TempTable\Excel Source.Outputs[Excel Source Output].ExternalColumns[JCCo]"
+                          dataType="r8"
+                          name="JCCo" />
+                        <externalMetadataColumn
+                          refId="Package\Loop Through each file in the source location\DFT-Load Data to TempTable\Excel Source.Outputs[Excel Source Output].ExternalColumns[Project]"
+                          dataType="wstr"
+                          length="255"
+                          name="Project" />
+                        <externalMetadataColumn
+                          refId="Package\Loop Through each file in the source location\DFT-Load Data to TempTable\Excel Source.Outputs[Excel Source Output].ExternalColumns[Vendor]"
+                          dataType="r8"
+                          name="Vendor" />
+                        <externalMetadataColumn
+                          refId="Package\Loop Through each file in the source location\DFT-Load Data to TempTable\Excel Source.Outputs[Excel Source Output].ExternalColumns[SecondTierFirm]"
+                          dataType="wstr"
+                          length="255"
+                          name="SecondTierFirm" />
+                        <externalMetadataColumn
+                          refId="Package\Loop Through each file in the source location\DFT-Load Data to TempTable\Excel Source.Outputs[Excel Source Output].ExternalColumns[Last Name]"
+                          dataType="wstr"
+                          length="255"
+                          name="Last Name" />
+                        <externalMetadataColumn
+                          refId="Package\Loop Through each file in the source location\DFT-Load Data to TempTable\Excel Source.Outputs[Excel Source Output].ExternalColumns[First Name]"
+                          dataType="wstr"
+                          length="255"
+                          name="First Name" />
+                        <externalMetadataColumn
+                          refId="Package\Loop Through each file in the source location\DFT-Load Data to TempTable\Excel Source.Outputs[Excel Source Output].ExternalColumns[Mth]"
+                          dataType="date"
+                          name="Mth" />
+                        <externalMetadataColumn
+                          refId="Package\Loop Through each file in the source location\DFT-Load Data to TempTable\Excel Source.Outputs[Excel Source Output].ExternalColumns[Safety ID]"
+                          dataType="wstr"
+                          length="255"
+                          name="Safety ID" />
+                        <externalMetadataColumn
+                          refId="Package\Loop Through each file in the source location\DFT-Load Data to TempTable\Excel Source.Outputs[Excel Source Output].ExternalColumns[Days On Project]"
+                          dataType="wstr"
+                          length="255"
+                          name="Days On Project" />
+                      </externalMetadataColumns>
+                    </output>
+                    <output
+                      refId="Package\Loop Through each file in the source location\DFT-Load Data to TempTable\Excel Source.Outputs[Excel Source Error Output]"
+                      isErrorOut="true"
+                      name="Excel Source Error Output">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\Loop Through each file in the source location\DFT-Load Data to TempTable\Excel Source.Outputs[Excel Source Error Output].Columns[JCCo]"
+                          dataType="r8"
+                          lineageId="Package\Loop Through each file in the source location\DFT-Load Data to TempTable\Excel Source.Outputs[Excel Source Error Output].Columns[JCCo]"
+                          name="JCCo" />
+                        <outputColumn
+                          refId="Package\Loop Through each file in the source location\DFT-Load Data to TempTable\Excel Source.Outputs[Excel Source Error Output].Columns[Project]"
+                          dataType="wstr"
+                          length="255"
+                          lineageId="Package\Loop Through each file in the source location\DFT-Load Data to TempTable\Excel Source.Outputs[Excel Source Error Output].Columns[Project]"
+                          name="Project" />
+                        <outputColumn
+                          refId="Package\Loop Through each file in the source location\DFT-Load Data to TempTable\Excel Source.Outputs[Excel Source Error Output].Columns[Vendor]"
+                          dataType="r8"
+                          lineageId="Package\Loop Through each file in the source location\DFT-Load Data to TempTable\Excel Source.Outputs[Excel Source Error Output].Columns[Vendor]"
+                          name="Vendor" />
+                        <outputColumn
+                          refId="Package\Loop Through each file in the source location\DFT-Load Data to TempTable\Excel Source.Outputs[Excel Source Error Output].Columns[SecondTierFirm]"
+                          dataType="wstr"
+                          length="255"
+                          lineageId="Package\Loop Through each file in the source location\DFT-Load Data to TempTable\Excel Source.Outputs[Excel Source Error Output].Columns[SecondTierFirm]"
+                          name="SecondTierFirm" />
+                        <outputColumn
+                          refId="Package\Loop Through each file in the source location\DFT-Load Data to TempTable\Excel Source.Outputs[Excel Source Error Output].Columns[Last Name]"
+                          dataType="wstr"
+                          length="255"
+                          lineageId="Package\Loop Through each file in the source location\DFT-Load Data to TempTable\Excel Source.Outputs[Excel Source Error Output].Columns[Last Name]"
+                          name="Last Name" />
+                        <outputColumn
+                          refId="Package\Loop Through each file in the source location\DFT-Load Data to TempTable\Excel Source.Outputs[Excel Source Error Output].Columns[First Name]"
+                          dataType="wstr"
+                          length="255"
+                          lineageId="Package\Loop Through each file in the source location\DFT-Load Data to TempTable\Excel Source.Outputs[Excel Source Error Output].Columns[First Name]"
+                          name="First Name" />
+                        <outputColumn
+                          refId="Package\Loop Through each file in the source location\DFT-Load Data to TempTable\Excel Source.Outputs[Excel Source Error Output].Columns[Mth]"
+                          dataType="date"
+                          lineageId="Package\Loop Through each file in the source location\DFT-Load Data to TempTable\Excel Source.Outputs[Excel Source Error Output].Columns[Mth]"
+                          name="Mth" />
+                        <outputColumn
+                          refId="Package\Loop Through each file in the source location\DFT-Load Data to TempTable\Excel Source.Outputs[Excel Source Error Output].Columns[Safety ID]"
+                          dataType="wstr"
+                          length="255"
+                          lineageId="Package\Loop Through each file in the source location\DFT-Load Data to TempTable\Excel Source.Outputs[Excel Source Error Output].Columns[Safety ID]"
+                          name="Safety ID" />
+                        <outputColumn
+                          refId="Package\Loop Through each file in the source location\DFT-Load Data to TempTable\Excel Source.Outputs[Excel Source Error Output].Columns[Days On Project]"
+                          dataType="wstr"
+                          length="255"
+                          lineageId="Package\Loop Through each file in the source location\DFT-Load Data to TempTable\Excel Source.Outputs[Excel Source Error Output].Columns[Days On Project]"
+                          name="Days On Project" />
+                        <outputColumn
+                          refId="Package\Loop Through each file in the source location\DFT-Load Data to TempTable\Excel Source.Outputs[Excel Source Error Output].Columns[ErrorCode]"
+                          dataType="i4"
+                          lineageId="Package\Loop Through each file in the source location\DFT-Load Data to TempTable\Excel Source.Outputs[Excel Source Error Output].Columns[ErrorCode]"
+                          name="ErrorCode"
+                          specialFlags="1" />
+                        <outputColumn
+                          refId="Package\Loop Through each file in the source location\DFT-Load Data to TempTable\Excel Source.Outputs[Excel Source Error Output].Columns[ErrorColumn]"
+                          dataType="i4"
+                          lineageId="Package\Loop Through each file in the source location\DFT-Load Data to TempTable\Excel Source.Outputs[Excel Source Error Output].Columns[ErrorColumn]"
+                          name="ErrorColumn"
+                          specialFlags="2" />
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                  </outputs>
+                </component>
+              </components>
+              <paths>
+                <path
+                  refId="Package\Loop Through each file in the source location\DFT-Load Data to TempTable.Paths[Derived Column Output]"
+                  endId="Package\Loop Through each file in the source location\DFT-Load Data to TempTable\Dst-budEconData_TempLoad.Inputs[OLE DB Destination Input]"
+                  name="Derived Column Output"
+                  startId="Package\Loop Through each file in the source location\DFT-Load Data to TempTable\Convert DaysOnProject to 0 if data not available.Outputs[Derived Column Output]" />
+                <path
+                  refId="Package\Loop Through each file in the source location\DFT-Load Data to TempTable.Paths[Excel Source Output]"
+                  endId="Package\Loop Through each file in the source location\DFT-Load Data to TempTable\Convert DaysOnProject to 0 if data not available.Inputs[Derived Column Input]"
+                  name="Excel Source Output"
+                  startId="Package\Loop Through each file in the source location\DFT-Load Data to TempTable\Excel Source.Outputs[Excel Source Output]" />
+              </paths>
+            </pipeline>
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\Loop Through each file in the source location\Move the Read file"
+          DTS:CreationName="Microsoft.FileSystemTask"
+          DTS:Description="File System Task"
+          DTS:DTSID="{7CD1EAD4-33AE-42FF-967D-BC1810941678}"
+          DTS:ExecutableType="Microsoft.FileSystemTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="Move the Read file"
+          DTS:ThreadHint="0">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <FileSystemData
+              TaskOperationType="MoveFile"
+              TaskOverwriteDestFile="True"
+              TaskSourcePath="User::vFullExcelFilePath"
+              TaskIsSourceVariable="True"
+              TaskDestinationPath="$Project::conExcelArchive"
+              TaskIsDestinationVariable="True" />
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\Loop Through each file in the source location\SQL-Load Final Table"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{29860979-B105-40A7-89CC-FA65E1FEC33F}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="SQL-Load Final Table"
+          DTS:ThreadHint="0">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{6292EA2F-1640-4DDA-BEFF-468FED72DFEB}"
+              SQLTask:SqlStatementSource="exec [dbo].[usp_MESSER_EI_MonthlySubmittal_Econ]" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\Loop Through each file in the source location\SQL-Truncate Temp Table"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{0F6E2CDF-2E10-4B18-BBAE-C128881AE20F}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="SQL-Truncate Temp Table"
+          DTS:ThreadHint="0">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{6292EA2F-1640-4DDA-BEFF-468FED72DFEB}"
+              SQLTask:SqlStatementSource="TRUNCATE TABLE dbo.budEconData_TempLoad" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          </DTS:ObjectData>
+        </DTS:Executable>
+      </DTS:Executables>
+      <DTS:PrecedenceConstraints>
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\Loop Through each file in the source location.PrecedenceConstraints[Constraint]"
+          DTS:CreationName=""
+          DTS:DTSID="{3EF462E6-B63F-40A1-B6AE-DCC4C8F8B6D7}"
+          DTS:From="Package\Loop Through each file in the source location\DFT-Load Data to TempTable"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint"
+          DTS:To="Package\Loop Through each file in the source location\SQL-Load Final Table" />
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\Loop Through each file in the source location.PrecedenceConstraints[Constraint 1]"
+          DTS:CreationName=""
+          DTS:DTSID="{FD3D3F3C-67C4-4772-950C-74A5F7515E58}"
+          DTS:From="Package\Loop Through each file in the source location\SQL-Truncate Temp Table"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint 1"
+          DTS:To="Package\Loop Through each file in the source location\DFT-Load Data to TempTable" />
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\Loop Through each file in the source location.PrecedenceConstraints[Constraint 2]"
+          DTS:CreationName=""
+          DTS:DTSID="{C41D1D80-D790-4E3A-977A-2C8EA8962DF8}"
+          DTS:From="Package\Loop Through each file in the source location\SQL-Load Final Table"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint 2"
+          DTS:To="Package\Loop Through each file in the source location\Move the Read file" />
+      </DTS:PrecedenceConstraints>
+      <DTS:ForEachVariableMappings>
+        <DTS:ForEachVariableMapping
+          DTS:CreationName=""
+          DTS:DTSID="{B80098AB-9DF2-4DDB-A4EB-7557B9E060A0}"
+          DTS:ObjectName="{B80098AB-9DF2-4DDB-A4EB-7557B9E060A0}"
+          DTS:ValueIndex="0"
+          DTS:VariableName="User::vFileName" />
+      </DTS:ForEachVariableMappings>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="225,42"
+          Id="Package\Loop Through each file in the source location\DFT-Load Data to TempTable"
+          TopLeft="27.3055555555555,73.1111111111111" />
+        <NodeLayout
+          Size="170,42"
+          Id="Package\Loop Through each file in the source location\Move the Read file"
+          TopLeft="54.8055555555555,219" />
+        <NodeLayout
+          Size="187,42"
+          Id="Package\Loop Through each file in the source location\SQL-Load Final Table"
+          TopLeft="46.3055555555555,150.111111111111" />
+        <NodeLayout
+          Size="210,42"
+          Id="Package\Loop Through each file in the source location\SQL-Truncate Temp Table"
+          TopLeft="34.8055555555555,4.38888888888891" />
+        <EdgeLayout
+          Id="Package\Loop Through each file in the source location.PrecedenceConstraints[Constraint]"
+          TopLeft="139.805555555556,115.111111111111">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,34.9999999999999"
+              Start="0,0"
+              End="0,27.4999999999999">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,27.4999999999999" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Loop Through each file in the source location.PrecedenceConstraints[Constraint 1]"
+          TopLeft="139.805555555556,46.3888888888889">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,26.7222222222222"
+              Start="0,0"
+              End="0,19.2222222222222">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,19.2222222222222" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Loop Through each file in the source location.PrecedenceConstraints[Constraint 2]"
+          TopLeft="139.805555555556,192.111111111111">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,26.888888888889"
+              Start="0,0"
+              End="0,19.388888888889">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,19.388888888889" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <ContainerLayout
+          HeaderHeight="43"
+          IsExpanded="True"
+          PanelSize="287,316"
+          Size="287,359"
+          Id="Package\Loop Through each file in the source location"
+          TopLeft="212.888888888889,130.555555555556" />
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <TaskHost
+    design-time-name="Package\Loop Through each file in the source location\DFT-Load Data to TempTable">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="224,42"
+          Id="Package\Loop Through each file in the source location\DFT-Load Data to TempTable\Dst-budEconData_TempLoad"
+          TopLeft="127,176" />
+        <NodeLayout
+          Size="144,42"
+          Id="Package\Loop Through each file in the source location\DFT-Load Data to TempTable\Excel Source"
+          TopLeft="164,25" />
+        <NodeLayout
+          Size="313,42"
+          Id="Package\Loop Through each file in the source location\DFT-Load Data to TempTable\Convert DaysOnProject to 0 if data not available"
+          TopLeft="79,102" />
+        <EdgeLayout
+          Id="Package\Loop Through each file in the source location\DFT-Load Data to TempTable.Paths[Excel Source Output]"
+          TopLeft="235.75,67">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,35"
+              Start="0,0"
+              End="0,27.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,27.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Loop Through each file in the source location\DFT-Load Data to TempTable.Paths[Derived Column Output]"
+          TopLeft="237.25,144">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,32"
+              Start="0,0"
+              End="0,24.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,24.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\Loop Through each file in the source location\DFT-Load Data to TempTable\Dst-budEconData_TempLoad">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Loop Through each file in the source location\DFT-Load Data to TempTable\Excel Source">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>
